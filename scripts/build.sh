@@ -136,6 +136,24 @@ find ./build/brands -type f -name "logo.png" | while read logo; do
   fi
 done
 
+# Use dark icon as dark icon@2x in case it is missing
+find ./build -type f -name "dark_icon.png" | while read icon; do
+  dir=$(dirname "${icon}")
+  if [[ ! -f "${dir}/dark_icon@2x.png" ]]; then
+    cp "${icon}" "${dir}/dark_icon@2x.png"
+    echo "Using ${icon} as hDPI dark icon"
+  fi
+done
+
+# Use dark logo as dark logo@2x in case it is missing
+find ./build -type f -name "dark_logo.png" | while read logo; do
+  dir=$(dirname "${logo}")
+  if [[ ! -f "${dir}/dark_logo@2x.png" ]]; then
+    cp "${logo}" "${dir}/dark_logo@2x.png"
+    echo "Using ${logo} as hDPI dark logo"
+  fi
+done
+
 # Create fallback for dark variants
 find ./build -type f -type f -name "icon.png" -o -name "icon@2x.png" -o -name "logo.png" -o -name "logo@2x.png" | while read image; do
   dir=$(dirname "${image}")
